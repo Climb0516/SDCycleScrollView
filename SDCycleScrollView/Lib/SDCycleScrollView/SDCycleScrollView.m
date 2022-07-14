@@ -643,6 +643,11 @@ NSString * const ID = @"SDCycleScrollViewCell";
     int itemIndex = [self currentIndex];
     int indexOnPageControl = [self pageControlIndexWithCurrentCellIndex:itemIndex];
     
+    /// fork代码修改：添加scroll正在滑动的回调，用来处理自定义指示器及时响应问题
+    if ([self.delegate respondsToSelector:@selector(cycleScrollView:dragingScrollToIndex:)]) {
+        [self.delegate cycleScrollView:self dragingScrollToIndex:indexOnPageControl];
+    }
+    
     if ([self.pageControl isKindOfClass:[TAPageControl class]]) {
         TAPageControl *pageControl = (TAPageControl *)_pageControl;
         pageControl.currentPage = indexOnPageControl;
